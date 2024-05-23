@@ -1,0 +1,53 @@
+1. Zwykła asocjacja
+Zwykła asocjacja to najprostszy rodzaj związku między obiektami, gdzie jeden obiekt jest powiązany z innym. W naszym kodzie mamy dwa takie przypadki:
+
+Animal do Enclosure:
+
+Każde zwierzę (Animal) jest przypisane do jednego wybiegu (Enclosure), a jeden wybieg może mieć wiele zwierząt.
+Zaimplementowane w klasie Animal przez prywatne pole _enclosure i publiczną metodę SetEnclosure.
+Publiczna metoda SetEnclosure zapewnia, że kiedy zmieniamy wybieg zwierzęcia, zostaje to odzwierciedlone również w obiekcie Enclosure.
+Animal do Keeper:
+
+Każde zwierzę (Animal) jest przypisane do jednego opiekuna (Keeper), a jeden opiekun może mieć wiele zwierząt.
+Zaimplementowane w klasie Animal przez prywatne pole _keeper i publiczną metodę SetKeeper.
+Publiczna metoda SetKeeper zapewnia, że kiedy zmieniamy opiekuna zwierzęcia, zostaje to odzwierciedlone również w obiekcie Keeper.
+
+
+2. Asocjacja z atrybutem
+Asocjacja z atrybutem to związek między dwoma obiektami, który posiada dodatkowe informacje na temat tego związku. W naszym przypadku:
+
+Animal do MedicalRecord:
+
+Każde zwierzę (Animal) może mieć wiele rekordów medycznych (MedicalRecord), a każdy rekord medyczny jest powiązany z jednym zwierzęciem.
+Zaimplementowane w klasie Animal przez prywatne pole _medicalRecords i publiczne metody AddMedicalRecord oraz RemoveMedicalRecord.
+Klasa MedicalRecord posiada dodatkowe atrybuty, takie jak Details i Date, które przechowują informacje na temat danego rekordu medycznego.
+
+
+3. Asocjacja kwalifikowana
+Asocjacja kwalifikowana to związek, w którym elementy są identyfikowane przez kwalifikator. W naszym kodzie:
+
+Enclosure do Animal z użyciem imienia jako kwalifikatora:
+
+Każdy wybieg (Enclosure) przechowuje zwierzęta (Animal), gdzie każde zwierzę jest identyfikowane przez swoje imię.
+Zaimplementowane w klasie Enclosure przez metodę GetAnimalByName, która wyszukuje zwierzęta na podstawie ich imienia.
+
+
+4. Kompozycja
+Kompozycja to silniejszy rodzaj asocjacji, gdzie cykl życia zależności jest ściśle powiązany z cyklem życia elementu nadrzędnego. W naszym kodzie:
+
+Zoo do Enclosure:
+
+Każde zoo (Zoo) może mieć wiele wybiegów (Enclosure), a wybieg istnieje tylko w kontekście swojego zoo.
+Zaimplementowane w klasie Zoo przez prywatne pole _enclosures i publiczne metody AddEnclosure oraz RemoveEnclosure.
+Zoo do Keeper:
+
+Każde zoo (Zoo) może mieć wielu opiekunów (Keeper), a opiekun istnieje tylko w kontekście swojego zoo.
+Zaimplementowane w klasie Zoo przez prywatne pole _keepers i publiczne metody AddKeeper oraz RemoveKeeper.
+
+
+
+Zwykła asocjacja (1-*): Normalna asocjacja między jednostkami, jak Zwierzę-Enclosure i Zwierzę-Opiekun. Metody zapewniają tworzenie połączeń zwrotnych.
+Asocjacja z atrybutem: Asocjacja z atrybutem, jak Zwierzę-Karta Medyczna. Właściwość Animal w MedicalRecord tworzy połączenie.
+Asocjacja kwalifikowana: Asocjacja kwalifikowana, jak w Enclosure, gdzie zwierzęta mogą być wyszukiwane po nazwie.
+Kompozycja (1-*): Kompozycja, gdzie jedna jednostka zarządza cyklem życia drugiej, jak Zoo-Enclosure i Zoo-Opiekun.
+Wszystkie asocjacje teraz zawierają prywatne pola oraz publiczne metody do tworzenia połączeń zwrotnych.
