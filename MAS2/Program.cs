@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ZooManagement
 {
@@ -7,59 +8,36 @@ namespace ZooManagement
         static void Main(string[] args)
         {
             Zoo zoo = new Zoo("City Zoo");
+            Console.WriteLine($"Created Zoo: {zoo.Name}");
 
-            Enclosure lionEnclosure = new Enclosure("Lion Enclosure");
-            Enclosure tigerEnclosure = new Enclosure("Tiger Enclosure");
+            zoo.AddEnclosure("Lion Enclosure");
+            zoo.AddEnclosure("Tiger Enclosure");
 
-            zoo.AddEnclosure(lionEnclosure);
-            zoo.AddEnclosure(tigerEnclosure);
+            Enclosure lionEnclosure = zoo.GetEnclosureByName("Lion Enclosure");
+            Enclosure tigerEnclosure = zoo.GetEnclosureByName("Tiger Enclosure");
+
+            Console.WriteLine($"Added Enclosures: {string.Join(", ", zoo.GetEnclosures().Select(e => e.Name))}");
 
             Keeper john = new Keeper("John");
             Keeper jane = new Keeper("Jane");
 
-            zoo.AddKeeper(john);
-            zoo.AddKeeper(jane);
+            Animal lion = new Animal("Lion", lionEnclosure);
+            Animal tiger = new Animal("Tiger", tigerEnclosure);
 
-            Animal lion = new Animal("Lion", 5);
-            Animal tiger = new Animal("Tiger", 3);
+            lionEnclosure.AddAnimal(lion);
+            tigerEnclosure.AddAnimal(tiger);
 
-            lion.SetEnclosure(lionEnclosure);
-            tiger.SetEnclosure(tigerEnclosure);
+            john.AddAnimal(lion);
+            jane.AddAnimal(tiger);
 
-            lion.SetKeeper(john);
-            tiger.SetKeeper(jane);
+            Console.WriteLine($"Animals in Lion Enclosure: {string.Join(", ", lionEnclosure.GetAnimals().Select(a => a.Name))}");
+            Console.WriteLine($"Animals in Tiger Enclosure: {string.Join(", ", tigerEnclosure.GetAnimals().Select(a => a.Name))}");
 
-            MedicalRecord lionRecord = new MedicalRecord
-            {
-                Details = "Healthy",
-                Date = DateTime.Now
-            };
-            lion.AddMedicalRecord(lionRecord);
+            Console.WriteLine($"Keeper of Lion: {lion.GetKeeper().Name}");
+            Console.WriteLine($"Keeper of Tiger: {tiger.GetKeeper().Name}");
 
-            MedicalRecord tigerRecord = new MedicalRecord
-            {
-                Details = "Injured",
-                Date = DateTime.Now
-            };
-            tiger.AddMedicalRecord(tigerRecord);
-
-            // Weryfikacja poprawności działania
-            Console.WriteLine($"{lion.Name} is in {lion.GetEnclosure().Name} with keeper {lion.GetKeeper().Name}");
-            Console.WriteLine($"{tiger.Name} is in {tiger.GetEnclosure().Name} with keeper {tiger.GetKeeper().Name}");
-
-            foreach (var record in lion.GetMedicalRecords())
-            {
-                Console.WriteLine($"{lion.Name} record: {record.Details} on {record.Date}");
-            }
-
-            foreach (var record in tiger.GetMedicalRecords())
-            {
-                Console.WriteLine($"{tiger.Name} record: {record.Details} on {record.Date}");
-            }
-
-            // Weryfikacja asocjacji kwalifikowanej
-            Animal qualifiedLion = lionEnclosure.GetAnimalByName("Lion");
-            Console.WriteLine($"Qualified Lion: {qualifiedLion?.Name ?? "Not found"}");
+            lion.AddMedicalRecord(new MedicalRecord { Date = DateTime.Now, Details = "Checkup" });
+            Console.WriteLine($"Medical Records for Lion: {lion.GetMedicalRecords().Count}");
         }
     }
 }

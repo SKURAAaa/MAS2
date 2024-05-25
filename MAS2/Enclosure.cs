@@ -7,12 +7,19 @@ namespace ZooManagement
     public class Enclosure
     {
         public string Name { get; set; }
+        public Zoo Zoo { get; private set; } // Kompozycja 1-1
         private List<Animal> _animals; // Zwykła asocjacja 1-*
 
-        public Enclosure(string name)
+        public Enclosure(string name, Zoo zoo)
         {
             Name = name;
+            SetZoo(zoo); // Ustawienie Zoo jako właściciela
             _animals = new List<Animal>();
+        }
+
+        public void SetZoo(Zoo zoo)
+        {
+            Zoo = zoo;
         }
 
         public IReadOnlyList<Animal> GetAnimals()

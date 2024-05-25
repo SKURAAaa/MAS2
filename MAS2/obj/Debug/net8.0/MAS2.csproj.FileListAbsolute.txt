@@ -12,3 +12,4 @@ C:\Users\Kacper\RiderProjects\MAS2\MAS2\obj\Debug\net8.0\refint\MAS2.dll
 C:\Users\Kacper\RiderProjects\MAS2\MAS2\obj\Debug\net8.0\MAS2.pdb
 C:\Users\Kacper\RiderProjects\MAS2\MAS2\obj\Debug\net8.0\MAS2.genruntimeconfig.cache
 C:\Users\Kacper\RiderProjects\MAS2\MAS2\obj\Debug\net8.0\ref\MAS2.dll
+C:\Users\Kacper\RiderProjects\MAS2\MAS2\obj\Debug\net8.0\MAS2.sourcelink.json

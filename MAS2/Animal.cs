@@ -6,65 +6,38 @@ namespace ZooManagement
     public class Animal
     {
         public string Name { get; set; }
-        public int Age { get; set; }
-        private Enclosure _enclosure; // Zwykła asocjacja 1-*
-        private Keeper _keeper; // Zwykła asocjacja 1-*
+        public Keeper Keeper { get; private set; } // Zwykła asocjacja 1-1
+        public Enclosure Enclosure { get; private set; } // Zwykła asocjacja 1-1
+
         private List<MedicalRecord> _medicalRecords; // Asocjacja z atrybutem
 
-        public Animal(string name, int age)
+        public Animal(string name, Enclosure enclosure)
         {
             Name = name;
-            Age = age;
+            SetEnclosure(enclosure);
             _medicalRecords = new List<MedicalRecord>();
-        }
-
-        // Zwykła asocjacja 1-* z automatycznym tworzeniem połączenia zwrotnego
-        public Enclosure GetEnclosure()
-        {
-            return _enclosure;
-        }
-
-        public void SetEnclosure(Enclosure enclosure)
-        {
-            if (_enclosure == enclosure) return;
-
-            if (_enclosure != null)
-            {
-                _enclosure.RemoveAnimal(this); // Usunięcie połączenia zwrotnego
-            }
-
-            _enclosure = enclosure;
-
-            if (enclosure != null)
-            {
-                enclosure.AddAnimal(this); // Tworzenie połączenia zwrotnego
-            }
-        }
-
-        // Zwykła asocjacja 1-* z automatycznym tworzeniem połączenia zwrotnego
-        public Keeper GetKeeper()
-        {
-            return _keeper;
         }
 
         public void SetKeeper(Keeper keeper)
         {
-            if (_keeper == keeper) return;
-
-            if (_keeper != null)
-            {
-                _keeper.RemoveAnimal(this); // Usunięcie połączenia zwrotnego
-            }
-
-            _keeper = keeper;
-
-            if (keeper != null)
-            {
-                keeper.AddAnimal(this); // Tworzenie połączenia zwrotnego
-            }
+            Keeper = keeper;
         }
 
-        // Asocjacja z atrybutem (MedicalRecord)
+        public Keeper GetKeeper()
+        {
+            return Keeper;
+        }
+
+        public void SetEnclosure(Enclosure enclosure)
+        {
+            Enclosure = enclosure;
+        }
+
+        public Enclosure GetEnclosure()
+        {
+            return Enclosure;
+        }
+
         public void AddMedicalRecord(MedicalRecord record)
         {
             if (!_medicalRecords.Contains(record))

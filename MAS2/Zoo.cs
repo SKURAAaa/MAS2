@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZooManagement
 {
@@ -7,13 +8,11 @@ namespace ZooManagement
     {
         public string Name { get; set; }
         private List<Enclosure> _enclosures; // Kompozycja 1-*
-        private List<Keeper> _keepers; // Kompozycja 1-*
 
         public Zoo(string name)
         {
             Name = name;
             _enclosures = new List<Enclosure>();
-            _keepers = new List<Keeper>();
         }
 
         public IReadOnlyList<Enclosure> GetEnclosures()
@@ -21,13 +20,10 @@ namespace ZooManagement
             return _enclosures.AsReadOnly();
         }
 
-        // Kompozycja 1-* z automatycznym tworzeniem połączenia zwrotnego
-        public void AddEnclosure(Enclosure enclosure)
+        public void AddEnclosure(string enclosureName)
         {
-            if (!_enclosures.Contains(enclosure))
-            {
-                _enclosures.Add(enclosure);
-            }
+            var enclosure = new Enclosure(enclosureName, this); // Tworzenie nowego obiektu Enclosure, który jest częścią Zoo
+            _enclosures.Add(enclosure);
         }
 
         public void RemoveEnclosure(Enclosure enclosure)
@@ -35,29 +31,13 @@ namespace ZooManagement
             if (_enclosures.Contains(enclosure))
             {
                 _enclosures.Remove(enclosure);
+                enclosure.SetZoo(null); // Usunięcie połączenia zwrotnego
             }
         }
 
-        public IReadOnlyList<Keeper> GetKeepers()
+        public Enclosure GetEnclosureByName(string name)
         {
-            return _keepers.AsReadOnly();
-        }
-
-        // Kompozycja 1-* z automatycznym tworzeniem połączenia zwrotnego
-        public void AddKeeper(Keeper keeper)
-        {
-            if (!_keepers.Contains(keeper))
-            {
-                _keepers.Add(keeper);
-            }
-        }
-
-        public void RemoveKeeper(Keeper keeper)
-        {
-            if (_keepers.Contains(keeper))
-            {
-                _keepers.Remove(keeper);
-            }
+            return _enclosures.FirstOrDefault(e => e.Name == name);
         }
     }
 }
